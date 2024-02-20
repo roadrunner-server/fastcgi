@@ -1,0 +1,22 @@
+[package]
+name = "fastcgi"
+description = "FastCGI handler (responder, authorizer, filter) library"
+license = "MIT"
+keywords = [ "protocol", "fastcgi", "web" ]
+categories = [ "web-programming", "network-programming"]
+version = "1.0.0"
+authors = ["Valery Piashchynski"]
+edition = "2021"
+resolver = "2"
+homepage = "https://github.com/roadrunner-server/fastcgi"
+repository = "https://github.com/roadrunner-server/fastcgi"
+readme = "README.md"
+exclude = [ ".github"]
+
+[dependencies]
+log = "0.4"
+byteorder = "1"
+
+[dev-dependencies]
+once_cell = "1"
+tokio-test = "0.4.3"

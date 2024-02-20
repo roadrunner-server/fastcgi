@@ -1,2 +1,1 @@
-# fastcgi
-FastCGI protocol implementation
+# FastCGI handler library [internal]
