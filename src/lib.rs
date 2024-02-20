@@ -297,12 +297,12 @@ pub enum Error {
     InvalidRoleNumber,
 
     /// This error is never returned to the user of the library. It is internally
-    /// handled by the `tokio-fastcgi` crate. The library returns a
+    /// handled by the `fastcgi` crate. The library returns a
     /// `FCGI_UNKNOWN_TYPE` record to the web-server.
     UnknownRecordType(RequestId, u8),
 
     /// An IoError occurred. Most likely the connection to the web-server got lost or
-    /// was interrupted. Some I/O errors are handled by `tokio-fastcgi`. If the
+    /// was interrupted. Some I/O errors are handled by `fastcgi`. If the
     /// web-server closes the FastCGI connection after all requests have been
     /// processed no error is returned and the EOF error is just swallowed.
     IoError(std::io::Error),
@@ -1014,7 +1014,7 @@ impl<R: Read, W: Write> Requests<R, W> {
     ///   to the web-server to allow it to adjust its connection handling.
     /// - max_reqs \
     ///   Maximum number of concurrent requests. Concurrent requests are
-    ///   handled by tokio-fastcgi but they consume memory. This value is used
+    ///   handled by fastcgi but they consume memory. This value is used
     ///   to tell the web-server how many concurrent requests he can use per
     ///   connection.
     pub fn new(rd: R, wr: W, max_conns: u8, max_reqs: u8) -> Self {
@@ -1276,7 +1276,6 @@ impl<W: Write> OutRecordWriter<W> {
         is.write_all(&message_header)?;
 
         // Write the data
-        // Writing empty data blocks breaks tokio-test. Therefore we only call write if the data-buffer is not empty.
         if !data.is_empty() {
             is.write_all(data)?;
             Ok(data.len())
